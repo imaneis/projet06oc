@@ -2,6 +2,39 @@
 
 {% block body %}
 
-<h1>hello</h1>
+<h1>hello {{user.username}}</h1>
+
+<div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Titre de l'article</th>
+                            <th>Auteur</th>
+                            <th>Date de création</th>
+                            <th>Éditer</th>
+                            <th>Supprimer</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+{% for article in articles %}
+<tr>
+
+<td>{{article.title}}</td>
+<td>{{article.author}}</td>
+<td>{{article.createdAt | date('d/m/Y')}} a {{article.createdAt | date('H:i:s')}}</td>
+<td><a class="btn btn-primary btn-xl text-uppercase" href="{{path('user_edit', {'id': article.id})}}">edit</a></td>
+<td><a class="btn btn-danger btn-xl text-uppercase" href="{{path('user_delete', {'id': article.id})}}">delete</a></td>
+
+ </tr>
+ {% endfor %}
+        </tbody>
+                    </table>
+                </div>
+            </article>
+        </div>
+    </div>
+
+
 
 {% endblock %}
