@@ -31,6 +31,7 @@ class TricksController extends AbstractController
 
             $comment->setCreatedAt(new \DateTime())
                     ->setArticle($article)
+                    ->setUser($this->getUser())
                     ->setAuthor($username);
             $manager->persist($comment);
             $manager->flush();

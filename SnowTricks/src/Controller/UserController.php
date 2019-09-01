@@ -101,9 +101,12 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
 
+        $username = $this->getUser()->getUsername();
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $article->setCreatedAt(new \DateTime());
+            $article->setAuthor($username);
             $file1 = $article->getImage1();
 
             $fileName = $this->generateUniqueFileName().'.'.$file1->guessExtension();

@@ -21,7 +21,6 @@ class ArticleFormType extends AbstractType
                 'choice_label' => 'title'
             ])
             ->add('content')
-            ->add('author')
             ->add('image1',FileType::class,array('data_class'=> null, 'label' => 'Image'))
             ->add('image2',FileType::class,array('data_class'=> null, 'label' => 'Image'))
             ->add('image3',FileType::class,array('data_class'=> null, 'label' => 'Image'))
