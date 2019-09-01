@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{# add this at the beginning of your template #}
+{% form_theme commentForm 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+<h2 class="text-uppercase">{{trick.title}}</h2>
+                <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                <div class="row">
+                <div class="col-md-3 col-sm-3">
+                <img class="img-fluid d-block mx-auto" src="{{ asset('uploads/brochures/' ~  trick.image1) }}" alt="">
+                </div>
+                <div class="col-md-3 col-sm-3">
+                <img class="img-fluid d-block mx-auto" src="{{ asset('uploads/brochures/' ~  trick.image2) }}" alt="">
+                </div>
+                <div class="col-md-3 col-sm-3">
+                <img class="img-fluid d-block mx-auto" src="{{ asset('uploads/brochures/' ~  trick.image3) }}" alt="">
+                </div>
+                <div class="col-md-3 col-sm-3">
+                <img class="img-fluid d-block mx-auto" src="{{ asset('uploads/brochures/' ~  trick.image4) }}" alt="">
+                </div>
+                <div class="col-md-3 col-sm-3">
+                {{trick.video | raw}}
+                </div>
+                </div>
+                <p>{{trick.content | raw}}</p>
+                <ul class="list-inline">
+                  <li>Date: {{trick.createdAt | date('d/m/Y')}} a {{trick.createdAt | date('H:i:s')}}</li>
+                  <li>Auteur: {{trick.author}}</li>
+                  <li>Category: Illustration</li>
+                </ul>
+
+<section>
+                <h1>{{ trick.comments | length}} Commentaires :</h1>
+                {% for comment in trick.comments %}
+                <div>
+                <div class="row">
+                <div class="col-3">
+                {{comment.author}} (<small>comment.createdAt | date('d/m/Y')}} a {{comment.createdAt | date('H:i:s')}}</small>)
+                </div>
+                <div class="col">
+                    {{comment.content | raw}}
+                </div>
+                </div>
+                </div>
+                {%endfor%}
+
+                {% if app.user %}
+
+                {{form_start(commentForm)}}
+                {{form_row(commentForm.content, {'attr': {'placeholder': "Votre commentaire"}})}}
+                <button class="btn btn-success" type="submit">Commenter !</button>
+                {{form_end(commentForm)}}
+
+                {% else %}
+                <h2>vous devez etre connecter ou inscript pour povoire commenter
+                {% endif %}
+                </section>
+
+       
+
+{% endblock %}
