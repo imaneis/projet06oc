@@ -6,21 +6,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use  App\Repository\ArticleRepository;
 
-class BlogController extends AbstractController
+class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
      */
-    public function home(ArticleRepository $repo)
+    public function index(ArticleRepository $repo)
     {
 
     	$articles = $repo->findAll();
 
-        foreach ($articles as $key => $value) {
-          $value->setImage(base64_encode(stream_get_contents($value->getImage())));
-        }
+        
     	
-        return $this->render('blog/home.html.twig', [
+        return $this->render('home/index.html.twig', [
         	'articles' => $articles
         ]);
     }

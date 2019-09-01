@@ -33,7 +33,7 @@
               </div>
             </div>
             
-            <img class="img-fluid" src="data:image/jpg;base64, {{article.image}}" alt="">
+            <img class="img-fluid" src="{{ asset('uploads/brochures/' ~ article.image1) }}" alt="">
             
           </a>
           <div class="portfolio-caption">
@@ -68,31 +68,25 @@
                 <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
                 <div class="row">
                 <div class="col-md-3 col-sm-3">
-                <img class="img-fluid d-block mx-auto" src="data:image/jpg;base64, {{article.image}}" alt="">
+                <img class="img-fluid d-block mx-auto" src="{{ asset('uploads/brochures/' ~  article.image1) }}" alt="">
                 </div>
                 <div class="col-md-3 col-sm-3">
-                <img class="img-fluid d-block mx-auto" src="data:image/jpg;base64, {{article.image}}" alt="">
+                <img class="img-fluid d-block mx-auto" src="{{ asset('uploads/brochures/' ~  article.image2) }}" alt="">
                 </div>
                 <div class="col-md-3 col-sm-3">
-                <img class="img-fluid d-block mx-auto" src="data:image/jpg;base64, {{article.image}}" alt="">
+                <img class="img-fluid d-block mx-auto" src="{{ asset('uploads/brochures/' ~  article.image3) }}" alt="">
                 </div>
                 <div class="col-md-3 col-sm-3">
-                <img class="img-fluid d-block mx-auto" src="data:image/jpg;base64, {{article.image}}" alt="">
+                <img class="img-fluid d-block mx-auto" src="{{ asset('uploads/brochures/' ~  article.image4) }}" alt="">
                 </div>
                 <div class="col-md-3 col-sm-3">
-                <img class="img-fluid d-block mx-auto" src="data:image/jpg;base64, {{article.image}}" alt="">
-                </div>
-                <div class="col-md-3 col-sm-3">
-                <img class="img-fluid d-block mx-auto" src="data:image/jpg;base64, {{article.image}}" alt="">
-                </div>
-                <div class="col-md-3 col-sm-3">
-                <img class="img-fluid d-block mx-auto" src="data:image/jpg;base64, {{article.image}}" alt="">
+                {{article.video | raw}}
                 </div>
                 </div>
                 <p>{{article.content | raw}}</p>
                 <ul class="list-inline">
                   <li>Date: {{article.createdAt | date('d/m/Y')}} a {{article.createdAt | date('H:i:s')}}</li>
-                  <li>Client: Threads</li>
+                  <li>Auteur: {{article.author}}</li>
                   <li>Category: Illustration</li>
                 </ul>
                 <button class="btn btn-primary" data-dismiss="modal" type="button">
