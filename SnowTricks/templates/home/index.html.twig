@@ -1,5 +1,8 @@
 {% extends 'base.html.twig' %}
 
+{# add this at the beginning of your template #}
+{% form_theme commentForm 'bootstrap_4_layout.html.twig' %}
+
 {% block body %}
 
 <!-- Header -->
@@ -89,6 +92,27 @@
                   <li>Auteur: {{article.author}}</li>
                   <li>Category: Illustration</li>
                 </ul>
+                <section>
+                <h1>{{ article.comments | length}} Commentaires :</h1>
+                {% for comment in article.comments %}
+                <div>
+                <div class="row">
+                <div class="col-3">
+                {{comment.author}} (<small>comment.createdAt | date('d/m/Y')}} a {{comment.createdAt | date('H:i:s')}}</small>)
+                </div>
+                <div class="col">
+                    {{comment.content | raw}}
+                </div>
+                </div>
+                </div>
+                {%endfor%}
+
+                {{form_start(commentForm)}}
+                {{form_row(commentForm.author, {'attr': {'placeholder': "Votre nom"}})}}
+                {{form_row(commentForm.content, {'attr': {'placeholder': "Votre commentaire"}})}}
+                <button class="btn btn-success" type="submit">Commenter !</button>
+                {{form_end(commentForm)}}
+                </section>
                 <button class="btn btn-primary" data-dismiss="modal" type="button">
                   <i class="fas fa-times"></i>
                   Close Project</button>
