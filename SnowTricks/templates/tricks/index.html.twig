@@ -28,7 +28,7 @@
                 <ul class="list-inline">
                   <li>Date: {{trick.createdAt | date('d/m/Y')}} a {{trick.createdAt | date('H:i:s')}}</li>
                   <li>Auteur: {{trick.author}}</li>
-                  <li>Category: Illustration</li>
+                  <li>Category: {{trick.category.title}}</li>
                 </ul>
 
 <section>
@@ -37,7 +37,9 @@
                 <div>
                 <div class="row">
                 <div class="col-3">
-                {{comment.author}} (<small>comment.createdAt | date('d/m/Y')}} a {{comment.createdAt | date('H:i:s')}}</small>)
+                {{comment.author}} 
+                {{comment.image}} 
+                (<small>{{comment.createdAt | date('d/m/Y')}} a {{comment.createdAt | date('H:i:s')}}</small>)
                 </div>
                 <div class="col">
                     {{comment.content | raw}}
