@@ -26,6 +26,10 @@ class Image
      */
     private $alt;
 
+
+    private $file;
+
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="images")
      * @ORM\JoinColumn(nullable=false)
@@ -72,4 +76,23 @@ class Image
 
         return $this;
     }
+
+   /**
+    * @param mixed
+    */
+
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+   /**
+    * @param mixed $file
+    */
+
+    public function setFile($file): void
+    {
+        $this->file = $file;
+    }
+
 }

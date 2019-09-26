@@ -65,6 +65,7 @@ class Article
     {
         $this->comments = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int

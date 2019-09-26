@@ -14,6 +14,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\Article;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use  App\Repository\ArticleRepository;
+use App\Service\FileUploader;
 
 
 class UserController extends AbstractController
@@ -93,7 +94,7 @@ class UserController extends AbstractController
     /**
      * @Route("/user/create", name="user_create")
      */
-    public function userCreate(Request $request, ObjectManager $manager) {
+    public function userCreate(Request $request, ObjectManager $manager, FileUploader $fileUploader) {
 
         $article = new Article();
 
@@ -101,60 +102,15 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
 
-        $username = $this->getUser()->getUsername();
-
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $article->setCreatedAt(new \DateTime());
-            $article->setAuthor($username);
-            $file1 = $article->getImage1();
-
-            $fileName = $this->generateUniqueFileName().'.'.$file1->guessExtension();
-
-            // moves the file to the directory where brochures are stored
-            $file1->move(
-                $this->getParameter('brochures_directory'),
-                $fileName
-            );
-
-            $article->setImage1($fileName);
-
-            $file2 = $article->getImage2();
-
-            $fileName = $this->generateUniqueFileName().'.'.$file2->guessExtension();
-
-            // moves the file to the directory where brochures are stored
-            $file2->move(
-                $this->getParameter('brochures_directory'),
-                $fileName
-            );
-
-            $article->setImage2($fileName);
-
-            $file3 = $article->getImage3();
-
-            $fileName = $this->generateUniqueFileName().'.'.$file3->guessExtension();
-
-            // moves the file to the directory where brochures are stored
-            $file3->move(
-                $this->getParameter('brochures_directory'),
-                $fileName
-            );
-
-            $article->setImage3($fileName);
-
-            $file4 = $article->getImage4();
-
-            $fileName = $this->generateUniqueFileName().'.'.$file4->guessExtension();
-
-            // moves the file to the directory where brochures are stored
-            $file4->move(
-                $this->getParameter('brochures_directory'),
-                $fileName
-            );
-
-            $article->setImage4($fileName);
-
+            foreach ($article->getImages() as $image) {
+                $fileName = $fileUploader->upload($image->getFile());
+                $image->setName($fileName);
+                $image->setArticle($article);
+                $manager->persist($image);
+            }
+            $article->setAuthor($this->getUser()->getUsername());
             $manager->persist($article);
             $manager->flush();
 
@@ -179,9 +135,7 @@ class UserController extends AbstractController
      /**
      * @Route("/user/edit/{id}", name="user_edit")
      */
-    public function userEdit($id, ArticleRepository $repo, Request $request, ObjectManager $manager) {
-
-        $article = $repo->find($id);
+    public function userEdit(Article $article, ArticleRepository $repo, Request $request, ObjectManager $manager) {
 
         $form = $this->createForm(ArticleFormType::class, $article);
 
