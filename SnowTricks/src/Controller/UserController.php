@@ -103,7 +103,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+        dump ($article);
             foreach ($article->getImages() as $image) {
                 $fileName = $fileUploader->upload($image->getFile());
                 $image->setName($fileName);
