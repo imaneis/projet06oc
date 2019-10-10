@@ -26,14 +26,14 @@
       <div class="row">
       {% for article in articles %}
         <div class="col-md-4 col-sm-6 portfolio-item">
-          <a class="portfolio-link" href="{{path('tricks', {'id': article.id})}}">
+          <a class="portfolio-link" href="{{path('tricks', {'id': article.id, 'page': 1})}}">
             <div class="portfolio-hover">
               <div class="portfolio-hover-content">
                 <i class="fas fa-plus fa-3x"></i>
               </div>
             </div>
             
-            <img class="img-fluid" src="{{ asset('uploads/' ~ article.images[0].name) }}" alt="{{ article.images[0].alt }}">
+            <img class="img-fluid" src="{{ asset('uploads/brochures/' ~ article.image1) }}" alt="">
             
           </a>
           <div class="portfolio-caption">

@@ -36,6 +36,34 @@ class Article
     private $Author;
 
     /**
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Upload your image")
+     * @Assert\File(mimeTypes={ "image/png", "image/jpeg" })
+     */
+    private $image1;
+
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Upload your image")
+     * @Assert\File(mimeTypes={ "image/png", "image/jpeg" })
+     */
+    private $image2;
+
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Upload your image")
+     * @Assert\File(mimeTypes={ "image/png", "image/jpeg" })
+     */
+    private $image3;
+
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Upload your image")
+     * @Assert\File(mimeTypes={ "image/png", "image/jpeg" })
+     */
+    private $image4;
+
+    /**
      * @ORM\Column(type="text")
      */
     private $video;
@@ -56,16 +84,9 @@ class Article
      */
     private $category;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="article", orphanRemoval=true)
-     */
-    private $images;
-
     public function __construct()
     {
         $this->comments = new ArrayCollection();
-        $this->images = new ArrayCollection();
-        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int
@@ -105,6 +126,54 @@ class Article
     public function setAuthor(string $Author): self
     {
         $this->Author = $Author;
+
+        return $this;
+    }
+
+    public function getImage1()
+    {
+        return $this->image1;
+    }
+
+    public function setImage1($image1): self
+    {
+        $this->image1 = $image1;
+
+        return $this;
+    }
+
+    public function getImage2()
+    {
+        return $this->image2;
+    }
+
+    public function setImage2($image2): self
+    {
+        $this->image2 = $image2;
+
+        return $this;
+    }
+
+    public function getImage3()
+    {
+        return $this->image3;
+    }
+
+    public function setImage3($image3): self
+    {
+        $this->image3 = $image3;
+
+        return $this;
+    }
+
+    public function getImage4()
+    {
+        return $this->image4;
+    }
+
+    public function setImage4($image4): self
+    {
+        $this->image4 = $image4;
 
         return $this;
     }
@@ -172,37 +241,6 @@ class Article
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Image[]
-     */
-    public function getImages(): Collection
-    {
-        return $this->images;
-    }
-
-    public function addImage(Image $image): self
-    {
-        if (!$this->images->contains($image)) {
-            $this->images[] = $image;
-            $image->setArticle($this);
-        }
-
-        return $this;
-    }
-
-    public function removeImage(Image $image): self
-    {
-        if ($this->images->contains($image)) {
-            $this->images->removeElement($image);
-            // set the owning side to null (unless already changed)
-            if ($image->getArticle() === $this) {
-                $image->setArticle(null);
-            }
-        }
 
         return $this;
     }

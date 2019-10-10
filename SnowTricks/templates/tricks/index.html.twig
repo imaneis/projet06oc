@@ -32,21 +32,27 @@
                 </ul>
 
 <section>
-                <h1>{{ trick.comments | length}} Commentaires :</h1>
-                {% for comment in trick.comments %}
-                <div>
-                <div class="row">
-                <div class="col-3">
-                {{comment.author}} 
-                <img class="img-fluid d-block mx-auto" src="{{ asset('uploads/brochures/' ~  comment.user.image) }}" alt=""> 
-                (<small>{{comment.createdAt | date('d/m/Y')}} a {{comment.createdAt | date('H:i:s')}}</small>)
-                </div>
-                <div class="col">
-                    {{comment.content | raw}}
-                </div>
-                </div>
-                </div>
-                {%endfor%}
+              
+
+                {% if comments is not empty %}
+                    {% for comment in comments %}
+                        <article>
+                         <header>
+                             <h1 class="article-titre">{{ comment.author }}</h1>
+                             <img class="img-fluid d-block mx-auto" src="{{ asset('uploads/brochures/' ~  comment.user.image) }}" alt=""> 
+                         <div class="article-meta">
+                             Publié le (<small>{{comment.createdAt | date('d/m/Y')}} a {{comment.createdAt | date('H:i:s')}}</small>).     
+                         </div>
+                             </header>
+
+                           {{comment.content | raw}}
+                    </article>
+                        <hr class="article-separation"/>
+                    {% endfor %}
+                {% else %}
+                    <p>Il n'y a aucun commentaire pour l'instant.</p>
+                {% endif %}
+
 
                 {% if app.user %}
 
@@ -58,6 +64,53 @@
                 {% else %}
                 <h2>vous devez etre connecter ou inscript pour povoire commenter
                 {% endif %}
+
+
+
+                {% if pagination.nbPages > 0 %}
+    <ul class="pagination">
+        {% if pagination.page > 1 %}
+            <li>
+                <a href="{{ path(pagination.nomRoute, pagination.paramsRoute|merge({'id': trick.id, 'page': 1})) }}">
+                    <<
+                </a>
+            </li>
+            <li>
+                <a href="{{ path(pagination.nomRoute,
+                pagination.paramsRoute|merge({'id': trick.id, 'page': pagination.page-1})) }}">
+                    <
+                </a>
+            </li>
+        {% endif %}
+
+        {# Affichage de toutes les pages entre p-4 et p+4 sauf si < 1 ou > nbPages #}
+        {% for p in range(max(pagination.page-4, 1), min(pagination.page+4, pagination.nbPages)) %}
+            <li {% if p == pagination.page %}class="active"{% endif %}>
+                <a href="{{ path(pagination.nomRoute, pagination.paramsRoute|merge({'id': trick.id, 'page': p})) }}">
+                    {{ p }}
+                </a>
+            </li>
+        {% endfor %}
+
+        {% if pagination.page < pagination.nbPages %}
+            <li>
+                <a href="{{ path(pagination.nomRoute,
+                pagination.paramsRoute|merge({'id': trick.id, 'page': pagination.page+1})) }}">
+                    >
+                </a>
+            </li>
+            <li>
+                <a href="{{ path(pagination.nomRoute,
+                pagination.paramsRoute|merge({'id': trick.id, 'page': pagination.nbPages})) }}">
+                    >>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+{% endif %}
+
+
+
                 </section>
 
        

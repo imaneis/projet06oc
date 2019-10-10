@@ -11,14 +11,27 @@ use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\User;
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
+use App\Repository\CommentRepository;
 
 class TricksController extends AbstractController
 {
     /**
-     * @Route("/tricks/{id}", name="tricks")
+     * @Route("/tricks/{id}/{page}", requirements={"page" = "\d+"}, name="tricks")
      */
-    public function index(Article $article, Request $request, ObjectManager $manager)
+    public function index($page, CommentRepository $repo, Article $article, Request $request, ObjectManager $manager)
     {
+
+        $nbArticlesParPage = 1;
+
+        $comments = $repo->findAllPagineEtTrie($page, $nbArticlesParPage);
+
+        $pagination = array(
+            'page' => $page,
+            'nbPages' => ceil(count($comments) / $nbArticlesParPage),
+            'nomRoute' => 'tricks',
+            'paramsRoute' => array()
+        );
+
 
     	$comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
@@ -36,13 +49,15 @@ class TricksController extends AbstractController
             $manager->persist($comment);
             $manager->flush();
 
-            return $this->redirectToRoute('tricks', ['id' => $article->getId()]);
+            return $this->redirectToRoute('tricks', ['id' => $article->getId(), 'page' => $page]);
         }
 
 
         return $this->render('tricks/index.html.twig', [
             'trick' => $article,
-            'commentForm' => $form->createView()
+            'commentForm' => $form->createView(),
+             'comments' => $comments,
+            'pagination' => $pagination
         ]);
     }
 }

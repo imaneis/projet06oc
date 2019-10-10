@@ -20,96 +20,41 @@
           {{ form_start(formArticle)}}
             <div class="row">
               <div class="col-md-6">
-              <div class="form-group">
+                <div class="form-group">
                  {{form_row(formArticle.title, {'label': "Titre de l'article", 'attr': {'placeholder': "Titre de l'article"}})}}
                 </div>
                  <div class="form-group">
                  {{form_row(formArticle.category)}}
                 </div>
                 <div class="form-group">
-                  {{form_row(formArticle.content, {'label': "Contenu de l'article", 'attr': {'placeholder': "Contenu de l'article"}})}}
+                	{{form_row(formArticle.content, {'label': "Contenu de l'article", 'attr': {'placeholder': "Contenu de l'article"}})}}
                 </div>
-
                 <div class="form-group">
-                 <ul class="images" data-prototype="{{ form_widget(formArticle.images.vars.prototype)|e('html_attr') }}">
-    ...
-</ul>
+                  {{form_row(formArticle.image1, {'label': "image1", 'attr': {'placeholder': "image1"}})}}
                 </div>
-              
-     <div class="form-group">
+                 <div class="form-group">
+                  {{form_row(formArticle.image2, {'label': "image2", 'attr': {'placeholder': "image2"}})}}
+                   <div class="form-group">
+                  {{form_row(formArticle.image3, {'label': "image3", 'attr': {'placeholder': "image3"}})}}
+                </div>
+                 <div class="form-group">
+                  {{form_row(formArticle.image4, {'label': "image4", 'attr': {'placeholder': "image4"}})}}
+                </div>
+                 <div class="form-group">
                   {{form_row(formArticle.video, {'label': "video", 'attr': {'placeholder': "video"}})}}
+                </div>
                 </div>
               </div>
               <div class="col-lg-12 text-center">
-                <input type="submit" value="Valider" />
+                <div id="success"></div>
+                <button id="sendMessageButton" class="btn btn-primary btn-xl text-uppercase" type="submit">Submit</button>
               </div>
             </div>
-            {% do formArticle.images.setRendered() %}
           {{ form_end(formArticle)}}
         </div>
       </div>
     </div>
   </section>
 
-
-{% endblock %}
-
-{% block javascripts %}
-{{ parent() }}
-<script>
-
-var $collectionHolder;
-
-// setup an "add a image" link
-var $addimageButton = $('<button type="button" class="add_image_link">Ajouter une image</button>');
-var $newLinkLi = $('<li></li>').append($addimageButton);
-
-jQuery(document).ready(function() {
-    // Get the ul that holds the collection of images
-    $collectionHolder = $('ul.images');
-
-    // add the "add a image" anchor and li to the images ul
-    $collectionHolder.append($newLinkLi);
-
-    // count the current form inputs we have (e.g. 2), use that as the new
-    // index when inserting a new item (e.g. 2)
-    $collectionHolder.data('index', $collectionHolder.find(':input').length);
-
-    $addimageButton.on('click', function(e) {
-        // add a new image form (see next code block)
-        addimageForm($collectionHolder, $newLinkLi);
-    });
-});
-
-
-function addimageForm($collectionHolder, $newLinkLi) {
-    // Get the data-prototype explained earlier
-    var prototype = $collectionHolder.data('prototype');
-
-    // get the new index
-    var index = $collectionHolder.data('index');
-
-    var newForm = prototype;
-    // You need this only if you didn't set 'label' => false in your images field in TaskType
-    // Replace '__name__label__' in the prototype's HTML to
-    // instead be a number based on how many items we have
-    // newForm = newForm.replace(/__name__label__/g, index);
-
-    // Replace '__name__' in the prototype's HTML to
-    // instead be a number based on how many items we have
-    newForm = newForm.replace(/__name__/g, index);
-
-    // increase the index with one for the next item
-    $collectionHolder.data('index', index + 1);
-
-    // Display the form in the page in an li, before the "Add a image" link li
-    var $newFormLi = $('<li></li>').append(newForm);
-    $newLinkLi.before($newFormLi);
-}
-
-
-
-
-</script>
 
 {% endblock %}

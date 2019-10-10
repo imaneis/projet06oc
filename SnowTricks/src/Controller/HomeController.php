@@ -11,11 +11,13 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(ArticleRepository $articleRepository)
+    public function index(ArticleRepository $repo)
     {
+
+    	$articles = $repo->findAll();
     	
         return $this->render('home/index.html.twig', [
-        	'articles' => $articleRepository->findAll()
+        	'articles' => $articles
         ]);
     }
 }
