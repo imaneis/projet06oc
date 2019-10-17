@@ -49,7 +49,7 @@ class TricksController extends AbstractController
             $manager->persist($comment);
             $manager->flush();
 
-            return $this->redirectToRoute('tricks', ['id' => $article->getId(), 'page' => $page]);
+            return $this->redirectToRoute('tricks', ['id' => $article->getId()]);
         }
 
 

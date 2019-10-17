@@ -21,7 +21,7 @@
                 <img class="img-fluid d-block mx-auto" src="{{ asset('uploads/brochures/' ~  trick.image4) }}" alt="">
                 </div>
                 <div class="col-md-3 col-sm-3">
-                {{trick.video | raw}}
+                <iframe width="560" height="315" src="{{trick.video | raw}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
                 </div>
                 <p>{{trick.content | raw}}</p>
