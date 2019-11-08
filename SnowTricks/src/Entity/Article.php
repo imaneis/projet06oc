@@ -64,7 +64,7 @@ class Article
     private $image4;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=255)
      */
     private $video;
 

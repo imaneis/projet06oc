@@ -2,11 +2,15 @@
 
 {% block body %}
 
-<h1>hello {{user.username}}</h1>
+<div class="container" style="margin-top: 50px;">
+
+<h1 style="margin-bottom: 50px;margin-top: 100px; text-align: center;">Gestion des tricks</h1>
+
+{% if articles is not empty %}
 
 <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
+                    <table class="table table-bordered table-hover">
+                        <thead class="thead-light">
                         <tr>
                             <th>Titre de l'article</th>
                             <th>Auteur</th>
@@ -20,11 +24,11 @@
 {% for article in articles %}
 <tr>
 
-<td>{{article.title}}</td>
-<td>{{article.author}}</td>
-<td>{{article.createdAt | date('d/m/Y')}} a {{article.createdAt | date('H:i:s')}}</td>
-<td><a class="btn btn-primary btn-xl text-uppercase" href="{{path('user_edit', {'id': article.id})}}">edit</a></td>
-<td><a class="btn btn-danger btn-xl text-uppercase" href="{{path('user_delete', {'id': article.id})}}">delete</a></td>
+<td style="text-align: center;">{{article.title}}</td>
+<td style="text-align: center;">{{article.author}}</td>
+<td style="text-align: center;">{{article.createdAt | date('d/m/Y')}} a {{article.createdAt | date('H:i:s')}}</td>
+<td style="text-align: center;"><a class="btn btn-primary btn-xl text-uppercase" href="{{path('user_edit', {'id': article.id})}}">edit</a></td>
+<td style="text-align: center;"><a class="btn btn-danger btn-xl text-uppercase" href="{{path('user_delete', {'id': article.id})}}">delete</a></td>
 
  </tr>
  {% endfor %}
@@ -35,6 +39,10 @@
         </div>
     </div>
 
+</div>
 
+{% else %}
+                    <p style="text-align: center;">Vous n'avez cree aucun article pour l'instant.</p>
+                {% endif %}
 
 {% endblock %}

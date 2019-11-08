@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class ArticleFormType extends AbstractType
 {
@@ -20,7 +21,7 @@ class ArticleFormType extends AbstractType
                 'class' => Category::class,
                 'choice_label' => 'title'
             ])
-            ->add('content')
+            ->add('content',TextareaType::class)
             ->add('image1',FileType::class,array('data_class'=> null, 'label' => 'Image'))
             ->add('image2',FileType::class,array('data_class'=> null, 'label' => 'Image'))
             ->add('image3',FileType::class,array('data_class'=> null, 'label' => 'Image'))

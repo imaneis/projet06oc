@@ -61,7 +61,7 @@ class CommentRepository extends ServiceEntityRepository
      *
      * @return Paginator
      */
-    public function findAllPagineEtTrie($page, $nbMaxParPage)
+    public function findAllPagineEtTrie($page, $nbMaxParPage, $id)
     {
         if (!is_numeric($page)) {
             throw new InvalidArgumentException(
@@ -80,7 +80,8 @@ class CommentRepository extends ServiceEntityRepository
         }
     
         $qb = $this->createQueryBuilder('a')
-           
+            ->andWhere('a.article IN (:id)')
+            ->setParameter('id', $id)
             ->orderBy('a.createdAt', 'DESC');
         
         $query = $qb->getQuery();

@@ -5,70 +5,73 @@
 
 {% block body %}
 
-<h2 class="text-uppercase">{{trick.title}}</h2>
-                <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+<!-- Header -->
+  <header class="masthead" style="background-image: url('{{ asset('uploads/brochures/' ~  trick.image1) }}')">
+    <div class="container">
+      <div class="intro-text">
+        <div class="intro-heading text-uppercase">{{trick.title}}</div>
+      </div>
+    </div>
+  </header>
+
+
+<div class="container" id="content" style="margin-top: 50px;">
+                
+                
                 <div class="row">
-                <div class="col-md-3 col-sm-3">
-                <img class="img-fluid d-block mx-auto" src="{{ asset('uploads/brochures/' ~  trick.image1) }}" alt="">
+                <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="{{trick.video | raw}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
-                <div class="col-md-3 col-sm-3">
-                <img class="img-fluid d-block mx-auto" src="{{ asset('uploads/brochures/' ~  trick.image2) }}" alt="">
                 </div>
+                <div class="row" style="margin-top: 50px;">
                 <div class="col-md-3 col-sm-3">
-                <img class="img-fluid d-block mx-auto" src="{{ asset('uploads/brochures/' ~  trick.image3) }}" alt="">
-                </div>
-                <div class="col-md-3 col-sm-3">
-                <img class="img-fluid d-block mx-auto" src="{{ asset('uploads/brochures/' ~  trick.image4) }}" alt="">
+                <img class="img-fluid d-block mx-auto rounded img-thumbnail" src="{{ asset('uploads/brochures/' ~  trick.image1) }}" alt="">
                 </div>
                 <div class="col-md-3 col-sm-3">
-                <iframe width="560" height="315" src="{{trick.video | raw}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <img class="img-fluid d-block mx-auto rounded img-thumbnail" src="{{ asset('uploads/brochures/' ~  trick.image2) }}" alt="">
+                </div>
+                <div class="col-md-3 col-sm-3">
+                <img class="img-fluid d-block mx-auto rounded img-thumbnail" src="{{ asset('uploads/brochures/' ~  trick.image3) }}" alt="">
+                </div>
+                <div class="col-md-3 col-sm-3">
+                <img class="img-fluid d-block mx-auto rounded img-thumbnail" src="{{ asset('uploads/brochures/' ~  trick.image4) }}" alt="">
                 </div>
                 </div>
-                <p>{{trick.content | raw}}</p>
-                <ul class="list-inline">
-                  <li>Date: {{trick.createdAt | date('d/m/Y')}} a {{trick.createdAt | date('H:i:s')}}</li>
+                <p style="margin-top: 50px;">{{trick.content | raw}}</p>
+                <ul class="list-inline" style="text-align: center;margin-top: 100px;">
+                  <li>Date de creation: {{trick.createdAt | date('d/m/Y')}} a {{trick.createdAt | date('H:i:s')}}</li>
                   <li>Auteur: {{trick.author}}</li>
                   <li>Category: {{trick.category.title}}</li>
                 </ul>
+
 
 <section>
               
 
                 {% if comments is not empty %}
+
+                <h1 class="article-titre">Commentaires :</h1>
                     {% for comment in comments %}
                         <article>
                          <header>
-                             <h1 class="article-titre">{{ comment.author }}</h1>
-                             <img class="img-fluid d-block mx-auto" src="{{ asset('uploads/brochures/' ~  comment.user.image) }}" alt=""> 
-                         <div class="article-meta">
+
+                             <div class="article-meta">
                              Publié le (<small>{{comment.createdAt | date('d/m/Y')}} a {{comment.createdAt | date('H:i:s')}}</small>).     
                          </div>
+                             <img width="70" height="30" class="img-fluid mx-auto rounded img-thumbnail" src="{{ asset('uploads/brochures/' ~  comment.user.image) }}" alt=""> 
+                             <p>{{ comment.author }} a dit :</p>
+
+                             <p>{{comment.content | raw}}.</p>
+                        
                              </header>
 
-                           {{comment.content | raw}}
+                           
                     </article>
-                        <hr class="article-separation"/>
+                        
                     {% endfor %}
-                {% else %}
-                    <p>Il n'y a aucun commentaire pour l'instant.</p>
-                {% endif %}
 
-
-                {% if app.user %}
-
-                {{form_start(commentForm)}}
-                {{form_row(commentForm.content, {'attr': {'placeholder': "Votre commentaire"}})}}
-                <button class="btn btn-success" type="submit">Commenter !</button>
-                {{form_end(commentForm)}}
-
-                {% else %}
-                <h2>vous devez etre connecter ou inscript pour povoire commenter
-                {% endif %}
-
-
-
-                {% if pagination.nbPages > 0 %}
-    <ul class="pagination">
+                           {% if pagination.nbPages > 0 %}
+    <ul class="list-inline d-flex justify-content-center">
         {% if pagination.page > 1 %}
             <li>
                 <a href="{{ path(pagination.nomRoute, pagination.paramsRoute|merge({'id': trick.id, 'page': 1})) }}">
@@ -111,8 +114,31 @@
 
 
 
+
+                    
+                {% else %}
+                    <p style="text-align: center;">Il n'y a aucun commentaire pour l'instant.</p>
+                {% endif %}
+
+                <hr class="article-separation"/>
+
+
+                {% if app.user %}
+
+                {{form_start(commentForm)}}
+                <p>Ajouter un commentaire : </p>
+                {{form_row(commentForm.content,{'label':false}, {'attr': {'placeholder': "Votre commentaire"}})}}
+                <button class="btn btn-success" type="submit">Commenter !</button>
+                {{form_end(commentForm)}}
+
+                {% else %}
+                <h3 style="text-align: center;margin-top: 25px;">Vous devez être connecté ou inscrit pour pouvoir commenter !</h3>
+                {% endif %}
+
+
+
                 </section>
 
-       
+       </div>
 
 {% endblock %}

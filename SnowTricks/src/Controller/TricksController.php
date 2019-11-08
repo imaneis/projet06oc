@@ -21,9 +21,9 @@ class TricksController extends AbstractController
     public function index($page, CommentRepository $repo, Article $article, Request $request, ObjectManager $manager)
     {
 
-        $nbArticlesParPage = 1;
+        $nbArticlesParPage = 5;
 
-        $comments = $repo->findAllPagineEtTrie($page, $nbArticlesParPage);
+        $comments = $repo->findAllPagineEtTrie($page, $nbArticlesParPage, $article->getId());
 
         $pagination = array(
             'page' => $page,
@@ -49,7 +49,7 @@ class TricksController extends AbstractController
             $manager->persist($comment);
             $manager->flush();
 
-            return $this->redirectToRoute('tricks', ['id' => $article->getId()]);
+            return $this->redirectToRoute('tricks', ['id' => $article->getId(), 'page' => $page]);
         }
 
 

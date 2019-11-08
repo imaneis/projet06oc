@@ -17,7 +17,7 @@
     </head>
     <body>
         <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-shrink" id="mainNav">
     <div class="container">
       <a class="navbar-brand js-scroll-trigger" href="{{ path('home') }}">SnowTricks</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,12 +26,24 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav text-uppercase ml-auto">
+          {% if app.user %}
           <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="/user/area">Espace communautaire</a>
+          </li>
+           <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="/user/create">Créer</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="/logout">Deconnexion</a>
+          </li>
+          {% else %}
+             <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="/signup">Signup</a>
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="/signin">Signin</a>
           </li>
+          {% endif %}
         </ul>
       </div>
     </div>
@@ -45,18 +57,8 @@
   <footer class="footer">
     <div class="container">
       <div class="row align-items-center">
-        <div class="col-md-6">
-          <span class="copyright">Copyright &copy; Your Website 2019</span>
-        </div>
-        <div class="col-md-6">
-          <ul class="list-inline quicklinks">
-            <li class="list-inline-item">
-              <a href="#">Privacy Policy</a>
-            </li>
-            <li class="list-inline-item">
-              <a href="#">Terms of Use</a>
-            </li>
-          </ul>
+        <div class="col-md-12">
+          <span class="copyright">Copyright &copy; SnowTricks 2019</span>
         </div>
       </div>
     </div>
