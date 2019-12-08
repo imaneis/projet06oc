@@ -2,6 +2,8 @@
 
 ### Openclassrooms / Projet 6 : Développez de A à Z le site communautaire SnowTricks
 
+## Codeclimate : https://codeclimate.com/github/imaneis/projet06oc
+
 
 ## Pre-requisites
 
