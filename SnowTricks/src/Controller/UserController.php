@@ -94,72 +94,81 @@ class UserController extends AbstractController
      * @Route("/user/create", name="user_create")
      */
     public function userCreate(Request $request, ObjectManager $manager) {
+            
+            $article = new Article();
 
-        $article = new Article();
+            $form = $this->createForm(ArticleFormType::class, $article);
 
-        $form = $this->createForm(ArticleFormType::class, $article);
+            $form->handleRequest($request);
 
-        $form->handleRequest($request);
+            $username = $this->getUser()->getUsername();
 
-        $username = $this->getUser()->getUsername();
+            if ($form->isSubmitted() && $form->isValid()) {
 
-        if ($form->isSubmitted() && $form->isValid()) {
+                try{
 
-            $article->setCreatedAt(new \DateTime());
-            $article->setAuthor($username);
-            $file1 = $article->getImage1();
+                $article->setCreatedAt(new \DateTime());
+                $article->setAuthor($username);
+                $file1 = $article->getImage1();
 
-            $fileName = $this->generateUniqueFileName().'.'.$file1->guessExtension();
+                $fileName = $this->generateUniqueFileName().'.'.$file1->guessExtension();
 
-            // moves the file to the directory where brochures are stored
-            $file1->move(
-                $this->getParameter('brochures_directory'),
-                $fileName
-            );
+                // moves the file to the directory where brochures are stored
+                $file1->move(
+                    $this->getParameter('brochures_directory'),
+                    $fileName
+                );
 
-            $article->setImage1($fileName);
+                $article->setImage1($fileName);
 
-            $file2 = $article->getImage2();
+                $file2 = $article->getImage2();
 
-            $fileName = $this->generateUniqueFileName().'.'.$file2->guessExtension();
+                $fileName = $this->generateUniqueFileName().'.'.$file2->guessExtension();
 
-            // moves the file to the directory where brochures are stored
-            $file2->move(
-                $this->getParameter('brochures_directory'),
-                $fileName
-            );
+                // moves the file to the directory where brochures are stored
+                $file2->move(
+                    $this->getParameter('brochures_directory'),
+                    $fileName
+                );
 
-            $article->setImage2($fileName);
+                $article->setImage2($fileName);
 
-            $file3 = $article->getImage3();
+                $file3 = $article->getImage3();
 
-            $fileName = $this->generateUniqueFileName().'.'.$file3->guessExtension();
+                $fileName = $this->generateUniqueFileName().'.'.$file3->guessExtension();
 
-            // moves the file to the directory where brochures are stored
-            $file3->move(
-                $this->getParameter('brochures_directory'),
-                $fileName
-            );
+                // moves the file to the directory where brochures are stored
+                $file3->move(
+                    $this->getParameter('brochures_directory'),
+                    $fileName
+                );
 
-            $article->setImage3($fileName);
+                $article->setImage3($fileName);
 
-            $file4 = $article->getImage4();
+                $file4 = $article->getImage4();
 
-            $fileName = $this->generateUniqueFileName().'.'.$file4->guessExtension();
+                $fileName = $this->generateUniqueFileName().'.'.$file4->guessExtension();
 
-            // moves the file to the directory where brochures are stored
-            $file4->move(
-                $this->getParameter('brochures_directory'),
-                $fileName
-            );
+                // moves the file to the directory where brochures are stored
+                $file4->move(
+                    $this->getParameter('brochures_directory'),
+                    $fileName
+                );
 
-            $article->setImage4($fileName);
+                $article->setImage4($fileName);
 
-            $manager->persist($article);
-            $manager->flush();
+                $manager->persist($article);
+                $manager->flush();
 
-            return $this->redirectToRoute('home');
-        }
+                $this->addFlash('success', 'Le trick a été ajoutée à la base de données avec succès');
+
+                return $this->redirectToRoute('home');
+
+                }
+                catch(\Exception $e){
+                    $this->addFlash('error', 'une erreur s\'est produite lors de l\'ajout du trick dans la base de données');
+                }
+            }
 
         return $this->render('user/userCreate.html.twig', [
 
@@ -181,67 +190,79 @@ class UserController extends AbstractController
      */
     public function userEdit($id, ArticleRepository $repo, Request $request, ObjectManager $manager) {
 
-        $article = $repo->find($id);
 
-        $form = $this->createForm(ArticleFormType::class, $article);
+            $article = $repo->find($id);
 
-        $form->handleRequest($request);
+            $form = $this->createForm(ArticleFormType::class, $article);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+            $form->handleRequest($request);
 
-            $file1 = $article->getImage1();
+            if ($form->isSubmitted() && $form->isValid()) {
 
-            $fileName = $this->generateUniqueFileName().'.'.$file1->guessExtension();
+                try{
 
-            // moves the file to the directory where brochures are stored
-            $file1->move(
-                $this->getParameter('brochures_directory'),
-                $fileName
-            );
+                $file1 = $article->getImage1();
 
-            $article->setImage1($fileName);
+                $fileName = $this->generateUniqueFileName().'.'.$file1->guessExtension();
 
-            $file2 = $article->getImage2();
+                // moves the file to the directory where brochures are stored
+                $file1->move(
+                    $this->getParameter('brochures_directory'),
+                    $fileName
+                );
 
-            $fileName = $this->generateUniqueFileName().'.'.$file2->guessExtension();
+                $article->setImage1($fileName);
 
-            // moves the file to the directory where brochures are stored
-            $file2->move(
-                $this->getParameter('brochures_directory'),
-                $fileName
-            );
+                $file2 = $article->getImage2();
 
-            $article->setImage2($fileName);
+                $fileName = $this->generateUniqueFileName().'.'.$file2->guessExtension();
 
-            $file3 = $article->getImage3();
+                // moves the file to the directory where brochures are stored
+                $file2->move(
+                    $this->getParameter('brochures_directory'),
+                    $fileName
+                );
 
-            $fileName = $this->generateUniqueFileName().'.'.$file3->guessExtension();
+                $article->setImage2($fileName);
 
-            // moves the file to the directory where brochures are stored
-            $file3->move(
-                $this->getParameter('brochures_directory'),
-                $fileName
-            );
+                $file3 = $article->getImage3();
 
-            $article->setImage3($fileName);
+                $fileName = $this->generateUniqueFileName().'.'.$file3->guessExtension();
 
-            $file4 = $article->getImage4();
+                // moves the file to the directory where brochures are stored
+                $file3->move(
+                    $this->getParameter('brochures_directory'),
+                    $fileName
+                );
 
-            $fileName = $this->generateUniqueFileName().'.'.$file4->guessExtension();
+                $article->setImage3($fileName);
 
-            // moves the file to the directory where brochures are stored
-            $file4->move(
-                $this->getParameter('brochures_directory'),
-                $fileName
-            );
+                $file4 = $article->getImage4();
 
-            $article->setImage4($fileName);
+                $fileName = $this->generateUniqueFileName().'.'.$file4->guessExtension();
 
-            $manager->persist($article);
-            $manager->flush();
+                // moves the file to the directory where brochures are stored
+                $file4->move(
+                    $this->getParameter('brochures_directory'),
+                    $fileName
+                );
 
-            return $this->redirectToRoute('home');
-        }
+                $article->setImage4($fileName);
+
+                $manager->persist($article);
+                $manager->flush();
+
+                $this->addFlash('success', 'the trick was edited');
+
+
+                return $this->redirectToRoute('home');
+
+                 }
+                catch(\Exception $e){
+                     $this->addFlash('error', 'there was an error somewhere there');
+                }
+
+            }
 
         return $this->render('user/userEdit.html.twig', [
             'article' => $article,
@@ -251,9 +272,9 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user/delete/{id}", name="user_delete")
+     * @Route("/user/delete/{id}/{state}", name="user_delete")
      */
-    public function userDelete($id, ArticleRepository $repo, ObjectManager $manager) {
+    public function userDelete($id, $state, ArticleRepository $repo, ObjectManager $manager) {
 
          $article = $repo->find($id);
 
@@ -276,7 +297,12 @@ class UserController extends AbstractController
          $manager->remove($article);
          $manager->flush();
 
-         return $this->redirectToRoute('user_area');
+         if ($state === "true") {
+            return $this->redirectToRoute('user_area');
+         }
+         else{
+            return $this->redirectToRoute('home');
+         }
 
     }
 

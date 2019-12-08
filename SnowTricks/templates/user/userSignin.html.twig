@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Se connecter{% endblock %}
 
 {% block body %}
 
@@ -7,17 +8,17 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12 text-center">
-          <h2 class="section-heading text-uppercase" style="margin-bottom: 70px;">Signin</h2>
+          <h2 class="section-heading text-uppercase" style="margin-bottom: 70px;">Se connecter</h2>
     
         </div>
       </div>
 
-          <form id="contactForm" action="{{ path('user_signin') }}" method="post" ">
+          <form id="contactForm" action="{{ path('user_signin') }}" method="post">
             <div class="row">
               <div class="col-lg-6 offset-lg-3">
                 <div class="form-group">
-                  <label for="email" class="required">Votre email :</label>
-                  <input class="form-control" id="email" type="email" placeholder="Your Email *" required="required" name="_username">
+                  <label for="email" class="required">Votre e-mail :</label>
+                  <input class="form-control" id="email" type="email" placeholder="Entrez votre adresse mail *" required="required" name="_username">
                 </div>
                  </div>
                 </div>
@@ -25,13 +26,13 @@
                  <div class="col-lg-6 offset-lg-3">
                 <div class="form-group">
                    <label for="password" class="required">Votre mot de passe :</label>
-                	 <input class="form-control" id="password" type="password" placeholder="Your password *" required="required" name="_password">
+                	 <input class="form-control" id="password" type="password" placeholder="Entrez votre mot de passe *" required="required" name="_password">
                 </div>
                 </div>
               </div>
               <div class="row">
               <div class="col-lg-6 offset-lg-3 text-center">
-                <button id="sendMessageButton" class="btn btn-primary btn-xl text-uppercase" type="submit">Conexion</button>
+                <button id="sendMessageButton" class="btn btn-primary btn-xl text-uppercase" type="submit">Connexion</button>
               </div>
             </div>
           </form>

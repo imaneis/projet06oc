@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\File\File;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  *@UniqueEntity(
  * fields = {"email"},
- * message = "L'email que vous avez ecrit est deja utiliser"
+ * message = "l'e-mail que vous avez entré est déjà utilisé"
  *)
  */
 class User implements UserInterface
@@ -39,12 +39,12 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min="8", minMessage="Votre mot de passe doit faire au minimum 8 caracteres")
+     * @Assert\Length(min="8", minMessage="Votre mot de passe doit contenir au moins 8 caractères")
      */
     private $password;
 
     /**
-     * @Assert\EqualTo(propertyPath="password", message="Vous n'avez pas taper le meme mot de passe")
+     * @Assert\EqualTo(propertyPath="password", message="Vous n'avez pas écrit le même mot de passe")
      */
 
     public $confirm_password;

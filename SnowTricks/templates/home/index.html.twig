@@ -6,8 +6,7 @@
   <header class="masthead">
     <div class="container">
       <div class="intro-text">
-        <div class="intro-lead-in">Welcome To Our Studio!</div>
-        <div class="intro-heading text-uppercase">It's Nice To Meet You</div>
+        <div class="intro-heading text-uppercase" style="color: #0f6674;">Au delà des sommets</div>
         <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#tricks"><i class="fas fa-arrow-down"></i></a>
       </div>
     </div>
@@ -19,6 +18,25 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12 text-center">
+        {% for label, flashes in app.session.flashbag.all %}
+    {% for flash in flashes %}
+        {% if ( label == 'success' ) %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {{ flash }}
+        </div>
+        {% elseif ( label == 'error' ) %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {{ flash }}
+        </div>
+        {% endif %}
+    {% endfor %}
+{% endfor %}
           <h2 class="section-heading text-uppercase" style="margin-bottom: 70px;">Tricks</h2>
         </div>
       </div>
@@ -36,7 +54,12 @@
             
           </a>
           <div class="portfolio-caption">
+              {% if app.user %}
+              <h4>
+               <a href="{{path('user_edit', {'id': article.id})}}" title="edit"><i class="fa fa-edit" style="color:#56dbaf;"></i></a> <a href="{{path('user_delete', {'id': article.id,'state': 'false'})}}" title="delete"><i class="fa fa-trash-alt" style="color:#d11e15;"></i></a> {{article.title}}</h4>
+              {% else %}
             <h4>{{article.title}}</h4>
+            {% endif %}
           </div>
         </div>
         {% endfor %}

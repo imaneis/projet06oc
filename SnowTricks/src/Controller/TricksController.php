@@ -21,7 +21,7 @@ class TricksController extends AbstractController
     public function index($page, CommentRepository $repo, Article $article, Request $request, ObjectManager $manager)
     {
 
-        $nbArticlesParPage = 5;
+        $nbArticlesParPage = 10;
 
         $comments = $repo->findAllPagineEtTrie($page, $nbArticlesParPage, $article->getId());
 

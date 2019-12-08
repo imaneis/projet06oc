@@ -7,9 +7,14 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
+ *@UniqueEntity(
+ * fields = {"Title"},
+ * message = "Le nom du trick que vous avez choisi est déjà utilisé"
+ *)
  */
 class Article
 {
